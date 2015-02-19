@@ -1,0 +1,19 @@
+body {
+	background-color: #C2F0ED;
+}
+#all {
+	width: 1000px;
+	height: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	background-color: #168A82;
+	border: solid 1px black
+}
+#banner{
+	width: 990px;
+	height: 100px;
+	border: solid 5px black;
+	background: #11ADA3;
+}

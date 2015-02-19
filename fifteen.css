@@ -1,0 +1,46 @@
+html {
+	font-family: cursive;
+	font-size: 14pt;
+	text-align: center;
+}
+.buttons {
+	margin-top: 10px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.button {
+	margin-left:auto;
+	margin-right: auto;
+	width:20%;
+	height:30px;
+	background-color: red;
+	border: solid black 1px;
+}
+img {
+	position: absolute;
+	left: 0px;
+	display: none;
+	z-index: 10;
+}
+#puzzlearea {
+	height: 400px;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	border: solid #00FF00 5px;
+}
+.puzzlepiece, #blank {
+	height: 100px;
+	width: 100px;
+	float: left;
+	font-size: 40pt;
+	background-color: #00FF00;
+}
+.puzzlepiece {
+	height: 90px;
+	width: 90px;
+	border: solid white 5px;
+	color: white;
+}
