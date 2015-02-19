@@ -23,6 +23,6 @@ body {
 }
 #portfolio {
   float: left;
-  margin-top: auto;
-  margin-bottom: auto;
+  font-size: 30px;
+  margin-top: 10px;
 }
