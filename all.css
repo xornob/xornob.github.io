@@ -22,7 +22,23 @@ body {
   font-size: 100px;
 }
 #portfolio {
-  float: left;
+  position: absolute;
   font-size: 30px;
-  margin-top: 10px;
+  margin-top: -60px;
+  margin-left: 450px;
+}
+a:link {
+  color: #0066FF;
+  text-decoration: none;
+}
+a:visited {
+  color: #0066FF;
+  text-decoration: none;
+}
+#home {
+  color: #11ADA3;
+  position: absolute;
+  font-size: 80px;
+  margin-top: -100px;
+  margin-left: 600px;
 }
