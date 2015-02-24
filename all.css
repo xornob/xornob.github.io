@@ -27,6 +27,15 @@ body {
   margin-top: -60px;
   margin-left: 450px;
 }
+#places {
+  position: absolute;
+  width: 998px;
+  border: solid 1px black;
+  background-color: #11ADA3;
+}
+#places div {
+  float: left;
+}
 a:link {
   color: #0066FF;
   text-decoration: none;
