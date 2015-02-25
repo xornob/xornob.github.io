@@ -10,10 +10,15 @@ window.onload = function () {
   banner.onmouseover = lightup;
   banner.onmouseout = lightdown;
   banner.innerHTML = "<div id='name'>CJ Dvorak</div><div id='portfolio'>- Portfolio</div><div id='home'>HOME</div>";
-  var placelist = [['Home','index'],['Khan Academy','academy.html'],['App inventor','inventor.html']];
+  var placelist = [['Home','index'],['Khan Academy','academy'],['App inventor','inventor']];
   for (x=0;x<placelist.length;x++){
     var link = document.createElement('a');
-    link.href = ''
-    link.className='puzzlelink';
+    places.appendChild(link);
+    link.href = placelist[x][1]+'.html';
+    var ndiv = document.createElement('div');
+    link.appendChild(ndiv);
+    ndiv.innerHTML = placelist[x][0];
+    ndiv.style.width=((998/placelist.length)-2)+'px';
+    // ndiv.className = 'placeToGo';
   }
 }

@@ -35,6 +35,7 @@ body {
 }
 #places div {
   float: left;
+  border: solid black 1px;
 }
 a:link {
   color: #0066FF;
