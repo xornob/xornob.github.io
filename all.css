@@ -35,6 +35,7 @@ body {
 }
 #places div {
   float: left;
+  text-align: center;
   border: solid black 1px;
 }
 a:link {
