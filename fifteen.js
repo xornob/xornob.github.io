@@ -57,7 +57,7 @@ function checksolved () {
 	}
 }
 function start () {
-	document.body.innerHTML='<h1>Fifteen Puzzle</h1><div id="puzzlearea"><img id="view" src="background.jpg" /><div id="blank"></div></div><div class="buttons"><div id="options" class="button">MORE OPTIONS</div></div>';
+	document.body.innerHTML='<a href="other.html"><h2>BACK</h2></a><h1>Fifteen Puzzle</h1><div id="puzzlearea"><img id="view" src="background.jpg" /><div id="blank"></div></div><div class="buttons"><div id="options" class="button">MORE OPTIONS</div></div>';
 	for (x=0;x<15;x++){
 		var piece = document.createElement('div');
 		piece.className='puzzlepiece';
@@ -120,7 +120,7 @@ function start () {
 	checksolved();
 }
 function options () {
-	document.getElementsByClassName('buttons')[0].innerHTML='<div id="fast" class="button">CLICK-FREE MODE</div><div id="viewer" class="button">VIEW SOLVED</div><div id="shuffle" class="button">SHUFFLE</div><div id="nums" class="button">NO NUMBERS</div><div id="hide" class="button">LESS OPTIONS</div>';
+	document.getElementsByClassName('buttons')[0].innerHTML='<div id="hide" class="button">LESS OPTIONS</div><div id="fast" class="button">CLICK-FREE MODE</div><div id="viewer" class="button">VIEW SOLVED</div><div id="shuffle" class="button">SHUFFLE</div><div id="nums" class="button">NO NUMBERS</div>';
 	document.getElementById('fast').onclick = fastmode;
 	document.getElementById('viewer').onmousedown = view;
 	document.getElementById('viewer').onmouseup = noview;
