@@ -1,0 +1,58 @@
+body {
+  background-color: #C2F0ED;
+}
+#all {
+  width: 1000px;
+  height: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: #9DCECB;
+  border: solid 1px black
+}
+#banner{
+  width: 990px;
+  height: 100px;
+  border: solid 5px black;
+  background: #58C6BF;
+}
+#name {
+  margin: 0px;
+  font-size: 100px;
+}
+#big3 {
+  position: absolute;
+  font-size: 30px;
+  margin-top: -60px;
+  margin-left: 450px;
+}
+#places {
+  position: absolute;
+  width: 998px;
+  border: solid 1px black;
+  background-color: #58C6BF;
+}
+#places div {
+  float: left;
+  text-align: center;
+  border: solid black 1px;
+}
+a:link {
+  color: #0066FF;
+  text-decoration: none;
+}
+a:visited {
+  color: #0066FF;
+  text-decoration: none;
+}
+#home {
+  color: #58C6BF;
+  position: absolute;
+  font-size: 80px;
+  margin-top: -100px;
+  margin-left: 600px;
+}
+#content {
+  margin-top: 22px;
+}
