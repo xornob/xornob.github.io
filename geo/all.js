@@ -10,7 +10,7 @@ window.onload = function () {
   var places = document.getElementById('places');
   banner.onmouseover = lightup;
   banner.onmouseout = lightdown;
-  banner.innerHTML = "<div id='name'>CJ Dvorak</div><div id='big3'>- Big 3</div><div id='home'>HOME</div>";
+  banner.innerHTML = "<img id='tlogo' src='../transparent.png' height=100 /><div id='name'>CJ Dvorak</div><div id='big3'>- Big 3</div><div id='home'>HOME</div>";
   var placelist = [['Overpopulation','overpop'],['Poverty','poverty'],['Kashmir','kashmir'],['The Big One','biggest']];
   for (x=0;x<placelist.length;x++){
     var link = document.createElement('a');

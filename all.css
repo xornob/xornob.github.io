@@ -17,6 +17,9 @@ body {
   border: solid 5px black;
   background: #58C6BF;
 }
+#tlogo {
+  float:left;
+}
 #name {
   margin: 0px;
   font-size: 100px;
@@ -25,7 +28,7 @@ body {
   position: absolute;
   font-size: 30px;
   margin-top: -60px;
-  margin-left: 450px;
+  margin-left: 520px;
 }
 #places {
   position: absolute;
@@ -51,7 +54,7 @@ a:visited {
   position: absolute;
   font-size: 80px;
   margin-top: -100px;
-  margin-left: 600px;
+  margin-left: 650px;
 }
 #content {
   margin-top: 22px;

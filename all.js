@@ -10,7 +10,7 @@ window.onload = function () {
   var places = document.getElementById('places');
   banner.onmouseover = lightup;
   banner.onmouseout = lightdown;
-  banner.innerHTML = "<div id='name'>CJ Dvorak</div><div id='portfolio'>- Portfolio</div><div id='home'>HOME</div>";
+  banner.innerHTML = "<img id='tlogo' src='transparent.png' height=100 /><div id='name'>CJ Dvorak</div><div id='portfolio'>- Portfolio</div><div id='home'>HOME</div>";
   var placelist = [['Home','index'],['Khan Academy','academy'],['App inventor','inventor'],['Other things','other']];
   for (x=0;x<placelist.length;x++){
     var link = document.createElement('a');
