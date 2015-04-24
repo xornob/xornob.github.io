@@ -12,7 +12,7 @@ window.onload = function () {
   banner.onmouseout = lightdown;
   banner.innerHTML = "<img id='tlogo' src='../transparent.png' height=100 /><div id='name'>CJ Dvorak</div><div id='big3'>- Big 3</div><div id='home'>HOME</div>";
   var placelist = [['Overpopulation','overpop'],['Poverty','poverty'],['Kashmir','kashmir'],['The Big One','biggest']];
-  for (x=0;x<placelist.length;x++){
+  for (x=0;x<placelist.length;x++) {
     var link = document.createElement('a');
     places.appendChild(link);
     var ndiv = document.createElement('div');
