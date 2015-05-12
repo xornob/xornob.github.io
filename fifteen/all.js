@@ -5,17 +5,12 @@ function lightdown () {
     this.style.background = "#58C6BF";
 }
 window.onload = function () {
-  var thing = document.createElement('script');
-  thing.type="text/javascript";
-
-}
-function next () {
   document.getElementById('all').innerHTML = "<a href='index.html'><div id='banner'></div></a><div id='places'></div>"+document.getElementById('all').innerHTML;
   var banner = document.getElementById('banner');
   var places = document.getElementById('places');
   banner.onmouseover = lightup;
   banner.onmouseout = lightdown;
-  banner.innerHTML = "<img id='tlogo' src='http://xornob.github.io/transparent.png' height=100 /><div id='name'>CJ Dvorak</div><div id='portfolio'>- Portfolio</div><div id='home'>HOME</div>";
+  banner.innerHTML = "<img id='tlogo' src='transparent.png' height=100 /><div id='name'>CJ Dvorak</div><div id='portfolio'>- Portfolio</div><div id='home'>HOME</div>";
   var placelist = [['Home','index'],['Khan Academy','academy'],['App inventor','inventor'],['Other things','other']];
   for (x=0;x<placelist.length;x++){
     var link = document.createElement('a');
