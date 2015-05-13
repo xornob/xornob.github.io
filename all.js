@@ -28,5 +28,5 @@ window.onload = function () {
   thing.src="places.js"
   thing.onreadystatechange = next;
   thing.onload = next;
-  head.appendChild(thing);
+  document.head.appendChild(thing);
 }
