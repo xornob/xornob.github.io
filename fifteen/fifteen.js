@@ -57,7 +57,7 @@ function checksolved () {
 	}
 }
 function start () {
-	document.body.innerHTML='<a href="other.html"><h2>BACK</h2></a><h1>Fifteen Puzzle</h1><div id="puzzlearea"><img id="view" src="background.jpg" /><div id="blank"></div></div><div class="buttons"><div id="options" class="button">MORE OPTIONS</div></div>';
+	document.body.innerHTML='<a href="../"><h2>BACK</h2></a><h1>Fifteen Puzzle</h1><div id="puzzlearea"><img id="view" src="background.jpg" /><div id="blank"></div></div><div class="buttons"><div id="options" class="button">MORE OPTIONS</div></div>';
 	for (x=0;x<15;x++){
 		var piece = document.createElement('div');
 		piece.className='puzzlepiece';
@@ -65,26 +65,26 @@ function start () {
 	}
 	var title = document.createElement('title');
 	title.innerHTML = 'FIFTEEN PUZZLE';
-	document.getElementsByTagName('head')[0].appendChild(title);
+	document.head.appendChild(title);
 	var linka  = document.createElement('link');
 	linka.href = 'all.css';
 	linka.type = 'text/css';
 	linka.rel  = 'stylesheet';
-	document.getElementsByTagName('head')[0].appendChild(linka);
+	document.head.appendChild(linka);
 	var linkb  = document.createElement('link');
 	linkb.href = 'fifteen.css';
 	linkb.type = 'text/css';
 	linkb.rel  = 'stylesheet';
-	document.getElementsByTagName('head')[0].appendChild(linkb);
+	document.head.appendChild(linkb);
 	var song = document.createElement('audio');
 	song.src = 'epona.mp3';
 	song.id = 'epona';
-	document.getElementsByTagName('head')[0].appendChild(song);
+	document.head.appendChild(song);
 	song.load();
 	var move = document.createElement('audio');
 	move.src = 'move.wav';
 	move.id = 'move';
-	document.getElementsByTagName('head')[0].appendChild(move);
+	document.head.appendChild(move);
 	move.load();
 	window.on = false;
 	window.solved = false;

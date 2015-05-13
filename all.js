@@ -22,6 +22,9 @@ function next () {
     }
   }
 }
+function waitalittle () {
+  // body...
+}
 window.onload = function () {
   var thing = document.createElement('script');
   thing.type="text/javascript";
