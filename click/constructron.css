@@ -1,0 +1,13 @@
+.active {
+	background-color: #CCCCCC;
+}
+.active:hover {
+	background-color: #EEEEEE;
+	border: 3px inset #DCDCDC;
+}
+.button {
+	padding: 5px;
+	width: 200px;
+	text-align: center;
+	border: 3px outset gray;
+}
