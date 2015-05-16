@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>How to play KeySwap</title>
+	<style type="text/css">
+		body {font-family: "Courier New"; background-color: #99CCFF; font-size: 28px;}
+		a {color:blue; color: blue; text-decoration: none;}
+		.swap1 {color:green;}
+		.swap2 {color:red;}
+		#swap {font-size:50px;}
+	</style>
+	<script type="text/javascript">
+		function keyswap () {
+			document.body.innerHTML=document.body.innerHTML.replace(/SeyKwap/g,'KeySwap');
+			document.title='How to play KeySwap';
+		}
+		function seykwap () {
+			document.body.innerHTML=document.body.innerHTML.replace(/KeySwap/g,'SeyKwap');
+			document.title='How to play SeyKwap';
+			window.setTimeout(keyswap,1000);
+		}
+		window.setInterval(seykwap,5000);
+	</script>
+</head>
+<body>
+	<a href="./">Back</a>
+	<p>KeySwap is a typing game, of sorts.</p>
+	<ul>
+		<li>To start a game, simply press any button on your keyboard.</li>
+		<li>The text under the KeySwap will begin to scroll to the left.</li>
+		<li>Start typing the word 'begin'.</li>
+		<li>As you type, the letters will change to green.</li>
+		<li>If any red letters make it off the left side of the screen, you lose!</li>
+		<li>More random words will appear from the right.</li>
+		<li>Occasionally, bewtween the row of words and the KeySwap title, you will see a notification that looks like:</li>
+		<h2 id='swap'><span class='swap1'>A</span> is switched with <span class='swap2'>B</span></h2>
+		<li>While this is displayed, these two characters are switched.</li>
+		<li>If the screen said <span class='swap2'>bad</span>, you would actually type <span class='swap1'>abd.</span></li>
+		<li>Pay attention! It is not always <span class='swap1'>A</span> and <span class='swap2'>B</span> that are switched.</li>
+	</ul>
+</body>
+</html>
