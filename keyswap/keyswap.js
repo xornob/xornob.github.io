@@ -46,6 +46,10 @@ window.onload = function() {
 	swapholder.style.display='none';
 };
 function checkleave (e) {
+	window.d=gamed.innerHTML;
+	window.n=gamen.innerHTML;
+	gamed.innerHTML=gamed.innerHTML.replace(/([A-z])/g,'X');
+	gamen.innerHTML=gamen.innerHTML.replace(/([A-z])/g,'X');
 	paused=true;
 	var confirmationMessage = "Sometimes pressing <backspace> leaves the page. This is here to protect you!";
 	(e || window.event).returnValue = confirmationMessage;
