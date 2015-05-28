@@ -93,15 +93,15 @@ function frame () {
 
 };
 window.onresize = function() {
-	a.style.left=(window.innerWidth/2-70)+'px';
+	a.style.left=(window.innerWidth/2-180)+'px';
 	gameh.style.fontSize=(window.innerWidth/17)+'px';
 	swapholder.style.left=(window.innerWidth/2-300)+'px';
 	if (!playing) {gameh.style.left=(window.innerWidth/6)+'px';}
 };
 window.onload = function() {
 	paused=false;
-	a = document.getElementsByTagName('a')[0];
-	a.style.top='10px';
+	a = document.getElementsByTagName('h3')[0];
+	a.style.top='0px';
 	for (var i = 65; i < 91; i++) {
 		keys[i]=String.fromCharCode(i);
 	};
