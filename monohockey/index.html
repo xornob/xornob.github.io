@@ -10,11 +10,27 @@
 		h1 {
 			font-size: 50px;
 		}
+		a {
+			text-decoration: none;
+			color: blue;
+		}
+		#gamebox {
+			cursor: none;
+		}
+		#goal {
+			cursor: none;
+			background-color: #AADDFF;
+			position: absolute;
+			margin: 0px;
+			top: 124px;
+			height: 10px;
+			width: 100px;
+		}
 		.border {
+			cursor: none;
 			background-color: #00CCFF;
 			margin: 0px;
-			padding: 0px;
-			position: fixed;
+			position: absolute;
 		}
 		.borderhit {
 			background-color: #FF0044;
@@ -23,13 +39,18 @@
 			height: 10px;
 			width: 500px;
 		}
-		.bottom {
+		.top {
 			height: 10px;
 			width: 200px;
+			top: 124px;
 		}
 		.vertical {
 			height: 500px;
 			width: 10px;
+			top: 134px;
+		}
+		#bottom {
+			top:634px;
 		}
 	</style>
 </head>
@@ -42,6 +63,8 @@
 		<div class='border bottom' id='bottom'></div>
 		<div class='border vertical' id='left'></div>
 		<div class='border vertical' id='right'></div>
+		<div id='goal'></div>
 	</div>
+	<h2 align='center'><a href='../'>Project List</a> - <a href='howtoplay.html'>How to Play</a></h2>
 </body>
 </html>

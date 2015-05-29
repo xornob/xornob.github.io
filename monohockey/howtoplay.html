@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>How to play MonoHockey</title>
+	<script type='text/javascript'>
+		var titles={};
+		window.onload = function() {
+			var title = document.getElementById('title');
+			var titletext='How to play MonoHockey';
+			for (var i = 0; i < titletext.length; i++) {
+				titles[i] = document.createElement('span');
+				titles[i].innerHTML = titletext[i];
+				titles[i].className = 'colorchange';
+				titles[i].defaultc = '#000000';
+				title.appendChild(titles[i]);
+			};
+		};
+		window.setInterval( function () {
+			var i = Math.floor(Math.random()*document.getElementsByClassName('colorchange').length);
+			document.getElementsByClassName('colorchange')[i].style.color=['#FF0000','#00FF00','#0000FF','#FF00FF'][Math.floor(Math.random()*6)];
+			window.setTimeout(function (i) {
+				if (document.getElementsByClassName('colorchange')[i].parentNode.nodeName=='A') {
+					document.getElementsByClassName('colorchange')[i].style.color='blue';
+				} else{
+					document.getElementsByClassName('colorchange')[i].style.color='#000000';
+				};
+			}, 500, i);
+		}, 25);
+	</script>
+	<style type='text/css'>
+		a {
+			text-decoration: none;
+			color: blue;
+		}
+	</style>
+</head>
+<body>
+	<h1 id='title'></h1>
+	<ul>
+		<li><span class="colorchange">M</span><span class="colorchange">o</span><span class="colorchange">n</span><span class="colorchange">o</span><span class="colorchange">H</span><span class="colorchange">o</span><span class="colorchange">c</span><span class="colorchange">k</span><span class="colorchange">e</span><span class="colorchange">y</span> is a single-player air hockey variant.</li>
+		<li>You control the green circle, the 'pusher', with your mouse.</li>
+		<li>The objective is to get the red puck into the goal at the top.</li>
+		<li>Your pusher can't hit the red puck.</li>
+		<li>You must hit the grey puck into the red puck to move the red puck.</li>
+		<li>Be careful! If the grey puck goes out through the goal, there is no way to hit the red puck and you will lose.</li>
+	</ul>
+	<h2><a href='./'>Play <span class="colorchange">M</span><span class="colorchange">o</span><span class="colorchange">n</span><span class="colorchange">o</span><span class="colorchange">H</span><span class="colorchange">o</span><span class="colorchange">c</span><span class="colorchange">k</span><span class="colorchange">e</span><span class="colorchange">y</span></a></h2>
+</body>
+</html>
