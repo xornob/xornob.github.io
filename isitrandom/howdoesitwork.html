@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>How can you calculate 'Randomness'?</title>
+	<style type='text/css'>
+		a {
+			text-decoration: none;
+			color: blue;
+		}
+	</style>
+</head>
+<body>
+	<h1>How can you calculate 'Randomness'?</h1>
+	<a href='./'>back</a>
+	<ul>
+		<li>We start with a string that is 2 characters long.</li>
+		<li>This string can be any of ['00','01','10','11'].</li>
+		<li>If the 0s and 1s are chosen randomly, then all 4 are equally likely.</li>
+		<li>Therefore, if we split a larger string into substrings of length 2, all 4 cases should appear evenly.</li>
+		<li>Even though it seems wrong, random generation is just as likely to generate '0000000000' or '1111111111' as it is to generate '1010011010'.</li>
+		<li>This program works by separating the large string into substrings, and comparing the number of times all of the possibilities show up.</li>
+		<li>Try a sequence generated from <a href='https://www.random.org/bytes/' target='_blank'>RANDOM.ORG</a> (output as 'binary'), or try typing in your own sequence to see how 'random' you are!</li>
+	</ul>
+</body>
+</html>
