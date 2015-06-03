@@ -9,7 +9,10 @@
 			err.innerHTML='';
 			if (i.value.length<150) {err.innerHTML+='Must be at least 150 characters long.<br />'}
 			else {b.disabled=false}
-			if (i.value.match(/[^10]/)) {
+			if (i.value.match(/\n/ && !i.value.match(/[^10\n]/))) {
+				getresults();
+			};
+			else if (i.value.match(/[^10]/)) {
 				err.innerHTML+='Only 0s and 1s are allowed.<br />';
 				window.setTimeout(removeerr,1000);
 			}
