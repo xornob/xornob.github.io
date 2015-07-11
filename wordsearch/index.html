@@ -30,9 +30,13 @@
 	<a href="../">Other Projects</a>
 	<h2>Crazy Word Search!</h2>
 	<div id="container"></div>
-	<input id="wordgetter" type="text" value="fish" />
-	<button id="start" disabled>Start</button>
+	<span id="toDelete">
+		<input id="wordgetter" type="text" value="fish" onkeydown="if (event.keyCode == 13) start();" />
+		<button id="start" disabled>Start</button><br>
+		The width of the grid: <input id="x" type="text" value="20" size="1" maxlength="2"><br>
+		The height of the grid: <input id="y" type="text" value="20" size="1" maxlength="2">
+	</span>
+	<p id="counts">Enter a word to use for the word search</p>
 	<p id="nojs">Javasript doesn't seem to be working.</p>
-	<p id="counts">Enter a word with 4 unique letters to use for the word search</p>
 </body>
 </html>

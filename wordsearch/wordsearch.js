@@ -1,5 +1,5 @@
-var size = {x:20,y:20}, grid = {}, ss = {x:-1,y:-1}, sel = false, sh = [], wordcount=0, giveupletters=[], givenup=false,
-container, word, drow, noletter, counts, total, remaining, giveup, wordgetter;
+var size = {x:20,y:20}, grid = {}, ss = {x:-1,y:-1}, sel = false, sh = [], wordcount=0, giveupletters=[], givenup=false, gottenwords={},
+container, word, drow, noletter, counts, total, remaining, giveup, wordgetter, xgetter, ygetter;
 
 function getletterdiv (o) {return container[o.x][o.y];}
 
@@ -64,14 +64,17 @@ function stopselect () {
 	for (var i = 0; i < sh.length; i++) {
 		s+=getletterchar(sh[i]);
 	};
-	if (s===word || s===drow) {
+	if ((s===word || s===drow) && gottenwords[''+sh[0].x+sh[0].y+sh[word.length-1].x+sh[word.length-1].y]!=='lol') {
 		for (var i = 0; i < sh.length; i++) {
 			getletterdiv(sh[i]).iw='#69f';
 		};
+		gottenwords[''+sh[0].x+sh[0].y+sh[word.length-1].x+sh[word.length-1].y]='lol';
 		wordcount -= 1;
 		remaining.innerHTML = wordcount;
 		if (wordcount===0) {
-			counts.innerHTML='You got all '+total.innerHTML+' occurences of "'+word+'"<br>Refresh to try again'
+			counts.innerHTML='You got all '+total.innerHTML+' occurences of "'+word+'"<br>Refresh to try again';
+			givenup=true;
+			document.body.removeChild(giveup);
 		};
 	};
 	clearhighlight();
@@ -79,21 +82,34 @@ function stopselect () {
 
 function start () {
 	word = wordgetter.value;
-	if (word.length!==4) {
-		counts.innerHTML = 'There must be 4 letters';
-		return;
+	counts.innerHTML='';
+	if (word.length<4) {
+		if (word.length<3) {
+			counts.innerHTML += 'There must be at least 3 letters<br>';
+		} else {
+			counts.innerHTML += 'Fewer than 4 letters might make it less fun<br>';
+		}
+	}
+	if (word.length>6) {
+		counts.innerHTML += 'More than 6 letters might have 0 ocurrances on a smaller grid<br>';
 	}
 	var temp = word.split('').sort(), prev='';
 	for (var i = 0; i < temp.length; i++) {
 		if (temp[i]===prev) {
-			counts.innerHTML = 'The letters must all be unique'
-			return;
+			counts.innerHTML += 'Having more than 1 '+prev.toUpperCase()+' might make it less fun<br>';
 		}
 		prev=temp[i];
 	};
+	if (counts.innerHTML!=='' && counts.innerHTML.charAt(0) !== 'T' && document.getElementById('start').innerHTML==='Start') {
+		document.getElementById('start').innerHTML = 'Are you sure you want to use this word?';
+		return;
+	}
+	if (!isNaN(xgetter.value) && !isNaN(ygetter.value) && xgetter.value && ygetter.value) {
+		size.x = +xgetter.value;
+		size.y = +ygetter.value;
+	} else return;
 	drow = word.split('').reverse().join('');
-	document.body.removeChild(document.getElementById('start'));
-	document.body.removeChild(wordgetter);
+	document.body.removeChild(document.getElementById('toDelete'));
 	for (var i = 0; i < size.x; i++) {
 		grid[i]={};
 		for (var j = 0; j < size.y; j++) {
@@ -126,7 +142,7 @@ function start () {
 		container[x][y]=temp;
 		if (x==size.x-1) {x=-1;y++;}
 	}
-	for (var x = 0, y = 0; y < size.y-word.length; x++) { //Vertical
+	for (var x = 0, y = 0; y < size.y - word.length; x++) { //Vertical
 		var s = '';
 		for (var i = 0; i < word.length; i++) {
 			s+=getletterchar(c(x,y+i));
@@ -205,6 +221,8 @@ window.onload = function() {
 	noletter = document.createElement('div');
 	counts = document.getElementById('counts');
 	wordgetter = document.getElementById('wordgetter');
+	xgetter = document.getElementById('x');
+	ygetter = document.getElementById('y');
 	container[-1]={'-1':noletter};
 	wordgetter.oninput=function() {
 		var s='', o=this.value.split('');
@@ -212,8 +230,33 @@ window.onload = function() {
 			if (o[i].match(/[a-z]/i)) s+=o[i];
 		};
 		this.value=s.toLowerCase();
+		document.getElementById('start').innerHTML='Start';
 	};
 	wordgetter.onchange=wordgetter.oninput;
 	wordgetter.onpropertychange=wordgetter.oninput;
+	xgetter.oninput = function() {
+		var s='', o=this.value.split('');
+		for (var i = 0; i < o.length; i++) {
+			if (o[i].match(/[0-9]/i)) s+=o[i];
+		};
+		if (s==='') counts.innerHTML='The width can\'t be empty<br>';
+		else if (+s===0) counts.innerHTML='The width can\'t be 0';
+		else counts.innerHTML='Enter a word to use for the word search';
+		this.value=s;
+	};
+	xgetter.onchange=xgetter.oninput;
+	xgetter.onpropertychange=xgetter.oninput;
+	ygetter.oninput = function() {
+		var s='', o=this.value.split('');
+		for (var i = 0; i < o.length; i++) {
+			if (o[i].match(/[0-9]/i)) s+=o[i];
+		};
+		if (s==='') counts.innerHTML='The height can\'t be empty<br>';
+		else if (+s===0) counts.innerHTML='The height can\'t be 0';
+		else counts.innerHTML='Enter a word to use for the word search';
+		this.value=s;
+	};
+	ygetter.onchange=ygetter.oninput;
+	ygetter.onpropertychange=ygetter.oninput;
 	document.body.onmouseup=function() {sel=false;clearhighlight();};;
 };
