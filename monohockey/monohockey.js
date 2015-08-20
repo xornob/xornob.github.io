@@ -44,11 +44,15 @@ function update () {
 			sp.r*=decel;
 		//Collisions
 			if (dist(p,intp)<35 && !intp.c) {
+				//Percentage of collision force = phitu and phita
+					phitu = intp.r / (intp.r + p.r);
+					phita = p.r / (intp.r + p.r);
 				//Puck is still, paddle hits it = vhit
 					vhit = ptor({th:thto(p,intp),r:2*(Math.cos(thto(p,intp)-p.th)*p.r)});
 				//Paddle is still, puck bounces off = vbounce
 					vbounce = ptor({th:Math.PI + 2*thto(p,intp) - intp.th,r:intp.r});
-					vnew = {xv:vhit.xv+vbounce.xv,yv:vhit.yv+vbounce.yv};
+				//Moar Math
+					vnew = {xv:phita*vhit.xv+phitu*vbounce.xv,yv:phita*vhit.yv+phitu*vbounce.yv};
 					pnew = rtop(vnew);
 					intp.th = pnew.th;
 					intp.r = pnew.r;
