@@ -83,27 +83,6 @@ function stopselect () {
 function start () {
 	word = wordgetter.value;
 	counts.innerHTML='';
-	if (word.length<4) {
-		if (word.length<3) {
-			counts.innerHTML += 'There must be at least 3 letters<br>';
-		} else {
-			counts.innerHTML += 'Fewer than 4 letters might make it less fun<br>';
-		}
-	}
-	if (word.length>6) {
-		counts.innerHTML += 'More than 6 letters might have 0 ocurrances on a smaller grid<br>';
-	}
-	var temp = word.split('').sort(), prev='';
-	for (var i = 0; i < temp.length; i++) {
-		if (temp[i]===prev) {
-			counts.innerHTML += 'Having more than 1 '+prev.toUpperCase()+' might make it less fun<br>';
-		}
-		prev=temp[i];
-	};
-	if (counts.innerHTML!=='' && counts.innerHTML.charAt(0) !== 'T' && document.getElementById('start').innerHTML==='Start') {
-		document.getElementById('start').innerHTML = 'Are you sure you want to use this word?';
-		return;
-	}
 	if (!isNaN(xgetter.value) && !isNaN(ygetter.value) && xgetter.value && ygetter.value) {
 		size.x = +xgetter.value;
 		size.y = +ygetter.value;
