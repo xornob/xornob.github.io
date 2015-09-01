@@ -202,6 +202,9 @@ window.onresize = function() {
 };
 
 window.onload = function () {
+  document.getElementById('button').onmousedown = function() {
+    start(document.getElementById('num').value);
+  };
   c = document.getElementById('canvas');
   ctx = c.getContext('2d');
   if (window.innerWidth > 600 || window.innerHeight > 600) {
