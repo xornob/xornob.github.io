@@ -80,10 +80,10 @@ function puck (x, y, paddle, n, color) {
       if (dist(this,items[1])<34) {
         if (!items[1].col) {
           var t = this.v.copy(), o = items[1].v.copy(), th = thto(this,items[1]);
-          if (o.r===0) {
+          if (t.r!==0) {
             items[1].v = new vel (t.vmg(th), th, true);
           }
-          else if (t.r===0) {
+          else if (o.r!==0) {
             items[1].v = new vel (o.r, 2*th + Math.PI - o.th, true);
           }
 
