@@ -201,8 +201,42 @@ window.onresize = function() {
   }
 };
 
+function reset () {
+  items = [];
+  window.clearTimeout(window.frametime);
+  window.gstate=-1;
+}
+
 window.onload = function () {
+  b = document.getElementById('button');
+  t = document.getElementById('num');
   c = document.getElementById('canvas');
+
+  t.oninput=function() {
+    var s='', o=this.value.split('');
+    for (var i = o.length - 1; i >= 0; i--) {
+      if (o[i].match('[0-9]')) {
+        s = o[i];
+        break;
+      }
+    }
+    if (trimto(2,+s,6)===+s) {
+      this.p = s;
+      this.value = s;
+    } else {
+      this.value = this.p;
+    }
+  };
+  t.onchange=t.oninput;
+  t.onpropertychange=t.oninput;
+  t.disabled=false;
+  b.disabled=false;
+  b.onmousedown = function() {
+    document.body.removeChild(this);
+    start(document.getElementById('num').value);
+    document.body.removeChild(document.getElementById('num'));
+  };
+
   ctx = c.getContext('2d');
   if (window.innerWidth > 600 || window.innerHeight > 600) {
     window.isbig = true;
