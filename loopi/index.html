@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loopi</title>
+	<script type="text/javascript">
+    function square (n,s,w,e) {
+      this.n=n;
+      this.s=s;
+      this.w=w;
+      this.e=e;
+      this.t=0;
+      this.t+=+this.n;
+      this.t+=+this.s;
+      this.t+=+this.w;
+      this.t+=+this.e;
+      if (this.t===2 && this.n===this.s) this.t=5;
+      var temp = document.createElement('canvas');
+      temp.width = 50;
+      temp.height= 50;
+      this.html = temp;
+      this.html.sq = this
+      this.html.onmousedown=function() {this.sq.rotate();};
+      this.ctx = this.html.getContext('2d');
+      this.curve = function(x,y) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(50*x,25);
+        this.ctx.quadraticCurveTo(25,25,25,50*y);
+        this.ctx.stroke();
+      };
+      switch (this.t) {
+        default:
+        case 0 :
+          this.draw = function() {return};
+          break;
+        case 1 :
+          this.draw = function() {
+            this.ctx.beginPath();
+            this.ctx.arc(25,25,10,0,2*Math.PI);
+            this.ctx.stroke();
+            if (this.n) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(25,15);
+              this.ctx.lineTo(25,0);
+              this.ctx.stroke();
+            }
+            else if (this.s) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(25,35);
+              this.ctx.lineTo(25,50);
+              this.ctx.stroke();
+            }
+            else if (this.w) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(15,25);
+              this.ctx.lineTo(0,25);
+              this.ctx.stroke();
+            }
+            else {
+              this.ctx.beginPath();
+              this.ctx.moveTo(35,25);
+              this.ctx.lineTo(50,25);
+              this.ctx.stroke();
+            }
+          }
+          break;
+          case 2:
+          case 3:
+          case 4:
+           this.draw = function() {
+            if (this.n&&this.e) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(25,0);
+              this.ctx.quadraticCurveTo(25,25,50,25);
+              this.ctx.stroke();
+            }
+            if (this.e&&this.s) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(50,25);
+              this.ctx.quadraticCurveTo(25,25,25,50);
+              this.ctx.stroke();
+            }
+            if (this.s&&this.w) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(25,50);
+              this.ctx.quadraticCurveTo(25,25,0,25);
+              this.ctx.stroke();
+            }
+            if (this.w&&this.n) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(0,25);
+              this.ctx.quadraticCurveTo(25,25,25,0);
+              this.ctx.stroke();
+            }
+           };
+           break;
+          case 5:
+            this.draw = function() {
+              if (this.n) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(25,0);
+                this.ctx.lineTo(25,50);
+                this.ctx.stroke();
+              }
+              if (this.w) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(0,25);
+                this.ctx.lineTo(50,25);
+                this.ctx.stroke();
+              }
+            };
+            break;
+      }
+      this.rotate = function(i) {
+        var temp = this.n;
+        this.n = this.w;
+        this.w = this.s;
+        this.s = this.e;
+        this.e = temp;
+        this.ctx.fillStyle='#fff';
+        this.ctx.fillRect(0,0,50,50);
+        this.ctx.fillStyle='#000';
+        this.draw();
+        if (i<0) {
+          this.rotate(i-1);
+        }
+      };
+      this.rotate(Math.random()*4);
+    }
+		window.onload = function() {
+			window.container = document.getElementById('container');
+      window.box = [];
+      var n = [false,false,false,false,false,false,false,false,false,false];
+      for (var i = 0; i < 10; i++) {
+        var temp = document.createElement('div');
+        temp.className = 'col';
+        window.box[i] = temp;
+        window.container.appendChild(temp);
+        var w = false;
+        for (var j = 0; j < 10; j++) {
+          var e = !(Math.random()+.5|0) && j!=9, s = !(Math.random()+.5|0) && i!=9;
+          var temp = new square(n[j],s,w,e);
+          window.box[i].appendChild(temp.html);
+          window.box[i][j] = temp;
+          n[j]=s;
+          var w = e;
+        }
+      }
+		};
+	</script>
+  <style type="text/css">
+    canvas, div {
+      margin: 0px;
+      padding: 0px;
+    }
+    .col {
+      display: inline-block;
+    }
+    #container {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+	<div id="container"></div>
+</body>
+</html>
