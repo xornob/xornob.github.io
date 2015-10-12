@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stormy Storm Language-y Language</title>
+</head>
+<body>
+  <textarea id="input" rows="10" cols="100" autofocus>Put some text here, then click the Change button</textarea><br />
+  <input type="button" id="button" value="Change-y Change"><br />
+  <textarea id="output" rows="10" cols="100" disabled>Puty Put some-y some texty text here-y here, theny then clicky click the-y the Change-y Change buttony button</textarea>
+</body>
+</html>
+<script type="text/javascript">
+  function y (s) {
+    var w = '', o = '',
+    sep =' ,.!?()[]{}',
+    hyph='aeiouyf';
+    for (var i = 0; i < s.length; i++) {
+      if(sep.indexOf(s[i])===-1) {
+        w += s[i];
+      } else {
+        if (w.length) {
+          if (hyph.indexOf(w[w.length-1].toLowerCase())>-1) {
+            o+=w+'-y '+w;
+          } else o+=w+'y '+w;
+          w='';
+        }
+        o+=s[i];
+      }
+    }
+    if (w.length) {
+      if (hyph.indexOf(w[w.length-1])>-1) {
+        o+=w+'-y '+w;
+      } else o+=w+'y '+w;
+      w='';
+    }
+    return o;
+  }
+  document.getElementById('button').onmousedown=function() {
+    document.getElementById('output').value=y(document.getElementById('input').value);
+  };
+</script>
