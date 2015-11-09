@@ -2,16 +2,20 @@
 <html>
 	<head>
 	  <title>Hydra</title>
+  </head>
+  <body>
+    <h1>The Hydra!</h1>
+  </body>
 		<script type="text/javascript">
-		  function randw () {return Math.random()*screen.width}
-		  function randh () {return Math.random()*screen.height}
-		  window.onbeforeunload = function () {
-		  	window.open(location.href, "_blank", "height=200,width=200,left="+randw()+",top="+randh());
-		  	window.open(location.href, "_blank", "height=200,width=200,left="+randw()+",top="+randh());
-		  }
+      if (!window.opener) {
+        window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*screen.width+",top="+Math.random()*screen.height);
+        document.body.innerHTML='Hydra has been launched';
+        window.close();
+      } else {
+        window.onbeforeunload = function () {
+          window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*screen.width+",top="+Math.random()*screen.height);
+          window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*screen.width+",top="+Math.random()*screen.height);
+        }
+      }
 		</script>
-	</head>
-	<body>
-		<p>The Hydra!</p>
-	</body>
 </html>
