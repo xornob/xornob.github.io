@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZK</title>
+  <style type="text/css">
+    canvas {
+      border: solid black 1px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+</html>
+	<script type="text/javascript">
+    function connect (a,b) {a.connect(b)}
+    function dist (a,b) {return a.dist(b)}
+    function trimto (a,b,c) {return Math.max(Math.min(b,c),a)}
+    function between (a,b,c) {return (a>b)==(b>c);}
+    function perigee (a,b,c) {
+      l={};
+      l.m=(a.y-b.y)/(a.x-b.x);
+      l.i=a.y-(a.x*l.m);
+      l.f=function(x) {
+        return p(x,this.m*x+this.i,false);
+      };
+      return l.f(((c.y-l.f(c.x).y)/(l.m+1/l.m))+c.x);
+    }
+
+    function p (x,y,s) {return new point(x,y,s)}
+    function point (x,y,s) {
+      this.x=x;
+      this.y=y;
+      this.c=[];
+      this.s=!!s;
+      if (this.s) {
+        this.index = points.a(this);
+      }
+      this.cx=function(x) {this.x=x};
+      this.cy=function(y) {this.y=y};
+      this.dist =function(b) {return Math.pow((Math.pow((this.x-b.x),2)+Math.pow((this.y-b.y),2)),.5)}
+      this.div = function(n) {return p(this.x/n,this.y/n,this.s);};
+      this.mult= function(n) {return p(this.x*n,this.y*n,this.s);};
+      this.connect = function(p) {
+        this.c.push(p.index);
+        if (p.c.indexOf(this.index)<0)
+          p.connect(this);
+      }
+      this.draw = function() {
+        for (var i = 0; i < this.c.length; i++) {
+          o = points.s(this.c[i]);
+          if (this.index<o.index) continue;
+          ctx.line(o,this);
+          if (ctx.m.dist(this)<0.01) {
+            ctx.dot(this,5,'#f00');
+          }
+          else if (ctx.m.dist(o)<0.01) {
+            ctx.dot(o,5,'#f00');
+          } else {
+            pg=perigee(this,o,ctx.m);
+            if (between(this.x,pg.x,o.x)&&between(this.y,pg.y,o.y)) {
+              if (ctx.m.dist(pg)<0.01) {
+                ctx.dot(pg,5,'#f00');
+              } else if (ctx.m.dist(pg)<0.1) {
+                ctx.dot(pg,5);
+              }
+            }
+          }
+        };
+      };
+    }
+
+    function frame () {
+      var size = Math.min(window.innerWidth,window.innerHeight)-20;
+
+      canvas.style.width=size+'px';
+      canvas.style.height=size+'px';
+      canvas.width=size;
+      canvas.height=size;
+      canvas.size=size;
+
+      points.draw();
+      // ctx.dot(ctx.m,3,'#0ff');
+    }
+
+
+    window.canvas=document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.m={x:.5,y:.5};
+    ctx.dot = function(o,r,c) {
+      this.beginPath();
+      if (c) this.fillStyle = c; else this.fillStyle='#000';
+      this.arc(o.x*canvas.size,o.y*canvas.size,r,0,2*Math.PI);
+      this.fill();
+    };
+    ctx.line = function(a,b,d) {
+      this.beginPath();
+      this.fillStyle='#000';
+      this.moveTo(a.x*canvas.size,a.y*canvas.size);
+      this.lineTo(b.x*canvas.size,b.y*canvas.size);
+      this.stroke();
+      if (d||typeof d==='undefined') {
+        this.dot(a,5);
+        this.dot(b,5);
+      }
+    };
+      /////////////////////////////////////////////////////////
+        var points = {
+          m:-1,
+          p:[],
+          s: function(i) {
+            return this.p[i];
+          },
+          a: function(p) {
+            this.p.push(p);
+            return this.p.length-1;
+          },
+          update: function() {
+            if (this.m>-1) {
+              this.s(this.m).cx(ctx.m.x);
+              this.s(this.m).cy(ctx.m.y);
+            }
+          },
+          draw: function() {
+            for (var i = 0; i < this.p.length; i++) {
+              if (this.p[i])
+                this.p[i].draw();
+            };
+          }
+        };
+        
+        var a = p(.25,.25,true);
+        var b = p(.75,.75,true);
+        a.connect(b);
+      /////////////////////////////////////////////////////////
+
+    window.onmousemove = function(e) {
+      ctx.m = p((e.clientX-canvas.offsetLeft+canvas.size/2)/canvas.size,(e.clientY-canvas.offsetTop+canvas.size/2)/canvas.size,false);
+      points.update();
+    };
+
+    window.onmousedown = function() {
+      for (var i = 0; i < points.p.length; i++) {
+        a=points.s(i);
+        if (!a) continue;
+        if (a.dist(ctx.m)<0.01) {
+          points.m=a.index;
+          return;
+        }
+      }
+      for (var i = 0; i < points.p.length; i++) {
+        a=points.s(i);
+        if (!a) continue;
+        for (var i = 0; i < a.c.length; i++) {
+          b=points.s(a.c[i]);
+          if (!b) continue;
+          if (perigee(a,b,ctx.m).dist(ctx.m)<0.01) {
+            c=p(ctx.m.x,ctx.m.y,true);
+            a.c[a.c.indexOf(b.index)]=c.index;
+            b.c[b.c.indexOf(a.index)]=c.index;
+            c.c.push(a.index); c.c.push(b.index);
+            points.m=c.index;
+            return;
+          }
+        }
+      }
+    };
+    window.onmouseup = function() {
+      points.m=-1;
+    };
+
+    window.frameinterval = window.setInterval(frame,30);
+	</script>
