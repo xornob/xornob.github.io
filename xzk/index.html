@@ -52,17 +52,19 @@
         if (p.c.indexOf(this.index)<0)
           p.connect(this);
       }
+      this.rc = function(a,b) {
+        this.c[this.c.indexOf(a.index)]=b.index;
+      };
       this.draw = function() {
         for (var i = 0; i < this.c.length; i++) {
           o = points.s(this.c[i]);
-          if (this.index<o.index) continue;
+          if (!o || this.index<o.index) continue;
           ctx.line(o,this);
           if (ctx.m.dist(this)<0.01) {
             ctx.dot(this,5,'#f00');
-          }
-          else if (ctx.m.dist(o)<0.01) {
+          } else if (ctx.m.dist(o)<0.01) {
             ctx.dot(o,5,'#f00');
-          } else {
+          } else if (points.m===-1) {
             pg=perigee(this,o,ctx.m);
             if (between(this.x,pg.x,o.x)&&between(this.y,pg.y,o.y)) {
               if (ctx.m.dist(pg)<0.01) {
@@ -70,6 +72,12 @@
               } else if (ctx.m.dist(pg)<0.1) {
                 ctx.dot(pg,5);
               }
+            }
+          } else if (points.c && points.m===this.index) {
+            ctx.dot(this,5,'#0f0');
+          } else if (points.c && points.c.indexOf(this.index)>-1) {
+            if (points.c[0]===this.index) {
+              ctx.line(points.c[0],points.c[1]);
             }
           }
         };
@@ -114,6 +122,7 @@
         var points = {
           m:-1,
           p:[],
+          c:false,
           s: function(i) {
             return this.p[i];
           },
@@ -125,6 +134,15 @@
             if (this.m>-1) {
               this.s(this.m).cx(ctx.m.x);
               this.s(this.m).cy(ctx.m.y);
+              c = this.s(this.m);
+              if (c.c.length===2) {
+                a = this.s(c.c[0]); b = this.s(c.c[1]);
+                console.log(perigee(a,b,c).dist(c));
+                if (perigee(a,b,c).dist(c)<0.01) {
+                  this.c=[a.index,b.index];
+                  console.log(this.c);
+                } else this.c=false;
+              }   else this.c=false;
             }
           },
           draw: function() {
@@ -162,8 +180,8 @@
           if (!b) continue;
           if (perigee(a,b,ctx.m).dist(ctx.m)<0.01) {
             c=p(ctx.m.x,ctx.m.y,true);
-            a.c[a.c.indexOf(b.index)]=c.index;
-            b.c[b.c.indexOf(a.index)]=c.index;
+            a.rc(b,c);
+            b.rc(a,c);
             c.c.push(a.index); c.c.push(b.index);
             points.m=c.index;
             return;
@@ -172,6 +190,21 @@
       }
     };
     window.onmouseup = function() {
+      c = points.s(points.m);
+      if (c.c.length===2) {
+        a = points.s(c.c[0]); b = points.s(c.c[1]);
+        if (perigee(a,b,c).dist(c)<0.01) {
+          a.rc(c,b);
+          b.rc(c,a);
+          for (var i = 0; i < points.p.length; i++) {
+            if (points.p) {
+              if (points.p[i].dist(c)==0) {
+                points.p[i]=false;
+              }
+            }
+          };
+        };
+      }
       points.m=-1;
     };
 
