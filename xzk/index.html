@@ -44,7 +44,7 @@
       }
       this.cx=function(x) {this.x=x};
       this.cy=function(y) {this.y=y};
-      this.dist =function(b) {return Math.pow((Math.pow((this.x-b.x),2)+Math.pow((this.y-b.y),2)),.5)}
+      this.dist= function(b) {return Math.pow((Math.pow((this.x-b.x),2)+Math.pow((this.y-b.y),2)),.5)}
       this.div = function(n) {return p(this.x/n,this.y/n,this.s);};
       this.mult= function(n) {return p(this.x*n,this.y*n,this.s);};
       this.connect = function(p) {
@@ -59,29 +59,27 @@
         for (var i = 0; i < this.c.length; i++) {
           o = points.s(this.c[i]);
           if (!o || this.index<o.index) continue;
-          ctx.line(o,this);
-          if (ctx.m.dist(this)<0.01) {
-            ctx.dot(this,5,'#f00');
-          } else if (ctx.m.dist(o)<0.01) {
-            ctx.dot(o,5,'#f00');
-          } else if (points.m===-1) {
-            pg=perigee(this,o,ctx.m);
-            if (between(this.x,pg.x,o.x)&&between(this.y,pg.y,o.y)) {
-              if (ctx.m.dist(pg)<0.01) {
-                ctx.dot(pg,5,'#f00');
-              } else if (ctx.m.dist(pg)<0.1) {
-                ctx.dot(pg,5);
+          if (points.m===-1 || (!points.c) || (this.index!=points.m && ([this.index,o.index].sort()!=[points.c]))) {
+            ctx.line(o,this);
+            if (ctx.m.dist(this)<0.01) {
+              ctx.dot(this,5,'#f00');
+            } else if (ctx.m.dist(o)<0.01) {
+              ctx.dot(o,5,'#f00');
+            } else if (points.m===-1) {
+              pg=perigee(this,o,ctx.m);
+              if (between(this.x,pg.x,o.x)&&between(this.y,pg.y,o.y)) {
+                if (ctx.m.dist(pg)<0.01) {
+                  ctx.dot(pg,5,'#f00');
+                } else if (ctx.m.dist(pg)<0.1) {
+                  ctx.dot(pg,5);
+                }
               }
             }
           } else if (points.c && points.m===this.index) {
-            ctx.dot(this,5,'#0f0');
-          } else if (points.c && points.c.indexOf(this.index)>-1) {
-            if (points.c[0]===this.index) {
-              ctx.line(points.c[0],points.c[1]);
-            }
+            ctx.dot(this,15,'#0f0');
           }
-        };
-      };
+        }
+      }
     }
 
     function frame () {
@@ -135,12 +133,10 @@
               this.s(this.m).cx(ctx.m.x);
               this.s(this.m).cy(ctx.m.y);
               c = this.s(this.m);
-              if (c.c.length===2) {
+              if (c && c.c.length===2) {
                 a = this.s(c.c[0]); b = this.s(c.c[1]);
-                console.log(perigee(a,b,c).dist(c));
-                if (perigee(a,b,c).dist(c)<0.01) {
+                if (perigee(a,b,c).dist(c)<0.02 && between(a.x,c.x,b.x) && between(a.y,c.y,b.y)) {
                   this.c=[a.index,b.index];
-                  console.log(this.c);
                 } else this.c=false;
               }   else this.c=false;
             }
@@ -149,13 +145,22 @@
             for (var i = 0; i < this.p.length; i++) {
               if (this.p[i])
                 this.p[i].draw();
-            };
+            }
+            if (this.c) {
+              ctx.line(this.s(this.c[0]),this.s(this.c[1]));
+            }
           }
         };
         
-        var a = p(.25,.25,true);
-        var b = p(.75,.75,true);
+        var a = p(.5,.5,true);
+        var b = p(.25,.25,true);
+        var c = p(.25,.75,true);
+        var d = p(.75,.25,true);
+        var e = p(.75,.75,true);
         a.connect(b);
+        a.connect(c);
+        a.connect(d);
+        a.connect(e);
       /////////////////////////////////////////////////////////
 
     window.onmousemove = function(e) {
@@ -178,7 +183,7 @@
         for (var i = 0; i < a.c.length; i++) {
           b=points.s(a.c[i]);
           if (!b) continue;
-          if (perigee(a,b,ctx.m).dist(ctx.m)<0.01) {
+          if (perigee(a,b,ctx.m).dist(ctx.m)<0.01 && between(a.x,ctx.m.x,b.x) && between(a.y,ctx.m.y,b.y)) {
             c=p(ctx.m.x,ctx.m.y,true);
             a.rc(b,c);
             b.rc(a,c);
@@ -190,20 +195,17 @@
       }
     };
     window.onmouseup = function() {
-      c = points.s(points.m);
-      if (c.c.length===2) {
-        a = points.s(c.c[0]); b = points.s(c.c[1]);
-        if (perigee(a,b,c).dist(c)<0.01) {
-          a.rc(c,b);
-          b.rc(c,a);
-          for (var i = 0; i < points.p.length; i++) {
-            if (points.p) {
-              if (points.p[i].dist(c)==0) {
-                points.p[i]=false;
-              }
+      if (points.c) {
+        a = points.s(points.c[0]); b = points.s(points.c[1]); c = points.s(points.m);
+        a.rc(c,b);
+        b.rc(c,a);
+        for (var i = 0; i < points.p.length; i++) {
+          if (points.p[i]) {
+            if (points.p[i].dist(c)==0) {
+              points.p[i]=false;
             }
-          };
-        };
+          }
+        }
       }
       points.m=-1;
     };
