@@ -18,9 +18,13 @@
 			h=t.getHours();
 			m=t.getMinutes();
 			s=t.getSeconds();
-			spanh.innerHTML=h-17;
-			spanm.innerHTML=m>9?m:'0'+m.toString();
-			spans.innerHTML=s>9?s:'0'+s.toString();
+			h=(h-17).toString();
+			m=m>9?m.toString():'0'+m.toString();
+			s=s>9?s.toString():'0'+s.toString();
+			spanh.innerHTML=h;
+			spanm.innerHTML=m;
+			spans.innerHTML=s;
+			document.title=h+':'+m+':'+s+document.base;
 		}
 	}
 	function init () {
@@ -39,6 +43,7 @@
 						window.interval=window.setInterval(update,1000,t);
 						document.getElementById('c').innerHTML=l[i][2];
 						document.title="How long until "+l[i][2]+" ends?";
+						document.base =" until "+l[i][2]+" ends.";
 						return;
 					}
 				}
@@ -53,6 +58,7 @@
 						window.interval=window.setInterval(update,1000,t);
 						document.getElementById('c').innerHTML=l[i][2];
 						document.title="How long until "+l[i][2]+" ends?";
+						document.base =" until "+l[i][2]+" ends.";
 						return;
 					}
 				}
@@ -66,6 +72,7 @@
 						window.interval=window.setInterval(update,1000,t);
 						document.getElementById('c').innerHTML=l[i][2];
 						document.title="How long until "+l[i][2]+" ends?";
+						document.base =" until "+l[i][2]+" ends.";
 						return;
 					}
 				}
@@ -79,6 +86,7 @@
 						window.interval=window.setInterval(update,1000,t);
 						document.getElementById('c').innerHTML=l[i][2];
 						document.title="How long until "+l[i][2]+" ends?";
+						document.base =" until "+l[i][2]+" ends.";
 						return;
 					}
 				}
