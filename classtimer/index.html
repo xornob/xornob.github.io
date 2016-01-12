@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>How long until class ends?</title>
+</head>
+<body>
+	<div id="all" align="center"><span id="h">--</span>:<span id="m">--</span>:<span id="s">--</span> until the end of <span id='c'>--</span></div>
+</body>
+<script type="text/javascript">
+	function update (d) {
+		console.log(new Date()+'\n'+d);
+		if ((new Date()).getTime()>d.getTime()) {
+			window.clearInterval(window.interval);
+			init();
+		}
+		else {
+			t=new Date(d-(new Date()));
+			h=t.getHours();
+			m=t.getMinutes();
+			s=t.getSeconds();
+			spanh.innerHTML=h-17;
+			spanm.innerHTML=m>9?m:'0'+m.toString();
+			spans.innerHTML=s>9?s:'0'+s.toString();
+		}
+	}
+	function init () {
+		window.spanh=document.getElementById('h');
+		window.spanm=document.getElementById('m');
+		window.spans=document.getElementById('s');
+		n=new Date();
+		t=new Date(n.getFullYear(), n.getMonth(), n.getDate(), 0, 0, 0, 0);
+		switch (n.getDay()) {
+			case 1:
+				l=[[8,22,'1st period'],[9,19,'2nd period'],[10,16,'3rd period'],[11,20,'4th period'],[12,17,'5th period'],[13,1,'Lunch'],[13,53,'6th period'],[14,50,'7th period']];
+				for (var i = 0; i < l.length; i++) {
+					t.setHours(l[i][0]);
+					t.setMinutes(l[i][1]);
+					if (n.getTime()<t.getTime()) {
+						window.interval=window.setInterval(update,1000,t);
+						document.getElementById('c').innerHTML=l[i][2];
+						document.title="How long until "+l[i][2]+" ends?";
+						return;
+					}
+				}
+				break;
+			case 2:
+			case 4:
+				l=[[9,4,'1st period'],[10,52,'3rd period'],[12,33,'5th period'],[13,16,'Lunch'],[14,50,'7th period']];
+				for (var i = 0; i < l.length; i++) {
+					t.setHours(l[i][0]);
+					t.setMinutes(l[i][1]);
+					if (n.getTime()<t.getTime()) {
+						window.interval=window.setInterval(update,1000,t);
+						document.getElementById('c').innerHTML=l[i][2];
+						document.title="How long until "+l[i][2]+" ends?";
+						return;
+					}
+				}
+				break;
+			case 3:
+				l=[[9,11,'Late Start'],[10,52,'2nd period'],[12,33,'4th period'],[13,16,'Lunch'],[2,50,'6th period']];
+				for (var i = 0; i < l.length; i++) {
+					t.setHours(l[i][0]);
+					t.setMinutes(l[i][1]);
+					if (n.getTime()<t.getTime()) {
+						window.interval=window.setInterval(update,1000,t);
+						document.getElementById('c').innerHTML=l[i][2];
+						document.title="How long until "+l[i][2]+" ends?";
+						return;
+					}
+				}
+				break;
+			case 5:
+				l=[[9,4,'2nd period'],[10,52,'Advisory'],[12,33,'4th period'],[1,16,'Lunch'],[2,50,'6th period']];
+				for (var i = 0; i < l.length; i++) {
+					t.setHours(l[i][0]);
+					t.setMinutes(l[i][1]);
+					if (n.getTime()<t.getTime()) {
+						window.interval=window.setInterval(update,1000,t);
+						document.getElementById('c').innerHTML=l[i][2];
+						document.title="How long until "+l[i][2]+" ends?";
+						return;
+					}
+				}
+				break;
+			case 0:
+			case 6:
+			default:
+				document.getElementById('all').innerHTML="It's the weekend, dummy!";
+				break;
+		}
+	}
+	window.onload=init;
+</script>
+</html>
