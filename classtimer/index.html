@@ -5,13 +5,25 @@
 </head>
 <body>
 	<h1 style="font-size: 100px;" id="all" align="center"><span id="h">--</span>:<span id="m">--</span>:<span id="s">--</span> until the end of <span id='c'>--</span></h1>
+	<div align="center"><button id="b">Not working? Click this</button></div>
 </body>
 <script type="text/javascript">
+	function flash () {
+		document.getElementById('all').innerHTML='-:--:--';
+		document.title='-:--:--';
+		window.setTimeout(flashreset,1000);
+	}
+	function flashreset () {
+		document.getElementById('all').innerHTML='0:00:00';
+		document.title='0:00:00';
+	}
 	function update (d) {
-		console.log(new Date()+'\n'+d);
 		if ((new Date()).getTime()>d.getTime()) {
 			window.clearInterval(window.interval);
-			init();
+			document.getElementById('all').innerHTML='0:00:00';
+			document.getElementById('b').innerHTML='Click to start the next class timer';
+			document.title='0:00:00';
+			window.flashinterval=window.setInterval(flash,2000);
 		}
 		else {
 			t=new Date(d-(new Date()));
@@ -27,12 +39,27 @@
 			document.title=h+':'+m+':'+s+document.base;
 		}
 	}
+	function reset () {
+		window.clearInterval(window.interval);
+		window.clearInterval(window.flashinterval);
+		document.getElementById('all').innerHTML='<span id="h">--</span>:<span id="m">--</span>:<span id="s">--</span> until the end of <span id="c">--</span>';
+		document.getElementById('b').innerHTML='Not working? Click this';
+		window.spanh=document.getElementById('h');
+		window.spanm=document.getElementById('m');
+		window.spans=document.getElementById('s');
+	}
 	function init () {
+		document.getElementById('b').onmousedown=function() {reset();init();};
+		window.flashinterval=0;
 		window.spanh=document.getElementById('h');
 		window.spanm=document.getElementById('m');
 		window.spans=document.getElementById('s');
 		n=new Date();
-		t=new Date(n.getFullYear(), n.getMonth(), n.getDate(), 0, 0, 0, 0);
+		t=new Date(n.getFullYear(), n.getMonth(), n.getDate(), 7, 30, 0, 0);
+		if (n<t) {
+			document.getElementById('all').innerHTML='Class hasn\'t started yet';
+			document.getElementById('b').innerHTML='Click after 7:30';
+		};
 		switch (n.getDay()) {
 			case 1:
 				l=[[8,22,'1st period'],[9,19,'2nd period'],[10,16,'3rd period'],[11,20,'4th period'],[12,17,'5th period'],[13,1,'Lunch'],[13,53,'6th period'],[14,50,'7th period']];
@@ -95,8 +122,12 @@
 			case 6:
 			default:
 				document.getElementById('all').innerHTML="It's the weekend, dummy!";
+				document.getElementById('b').innerHTML='Click when it\'s no longer the weekend';
+					return;
 				break;
 		}
+		document.getElementById('all').innerHTML='Class is over for today';
+		document.getElementById('b').innerHTML='Click this tomorrow';
 	}
 	window.onload=init;
 </script>
