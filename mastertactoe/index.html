@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Master Tac Toe</title>
+  <style type="text/css">
+    body {
+      font-size:50px;
+     -webkit-touch-callout:none;
+     -webkit-user-select: none;
+     -khtml-user-select: none;
+     -moz-user-select:  none;
+     -ms-user-select:  none;
+      user-select:    none;
+
+    }
+    .col {
+      display: inline-block;
+    }
+    .bigbox {
+      display: inline-block;
+    }
+    .blue .bigbox {
+      border: solid #6495ed 3px;
+    }
+    .box {
+      width:70px;
+      height:70px;
+    }
+    .blue .bigbox .col .box {
+      border: solid #6495ed 3px;
+    }
+  </style>
+</head>
+<body>
+  <div align="center" class="blue">
+    <div class="bigbox" id="bb1">
+    </div>
+    <div class="bigbox" id="bb2">
+    </div>
+    <div class="bigbox" id="bb3">
+    </div>
+  </div>
+  <script type="text/javascript">
+    b1=document.getElementById('bb1');
+    b2=document.getElementById('bb2');
+    b3=document.getElementById('bb3');
+    grid=[b1,b2,b3];
+    for (var i = 0; i < 3; i++) {
+      for (var x = 0; x < 3; x++) {
+        grid[i][x]=document.createElement('div');
+        grid[i][x].className='col';
+        grid[i].appendChild(grid[i][x]);
+        for (var y = 0; y < 3; y++) {
+          t = document.createElement('div');
+          t.className='box';
+          t.x=x;
+          t.y=y;
+          t.b=i;
+          t.c=false;
+          t.innerHTML='&#x2718;';
+          t.style.color='#fff';
+          t.onmousedown=function() {
+            clicked(this.b,this.x,this.y);
+          };
+          t.onmouseover=function() {
+            if(!this.c) {
+              this.style.background='#6495ed';
+              this.style.color='#5480da';
+            }
+          };
+          t.onmouseout=function() {
+            this.style.background='#fff';
+            if (this.c) {
+              this.style.color='#000';
+            } else this.style.color='#fff';
+          };
+          grid[i][x].appendChild(t);
+          grid[i][x][y]=t;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
