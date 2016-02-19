@@ -22,12 +22,22 @@
     .blue .bigbox {
       border: solid #6495ed 3px;
     }
-    .box {
+    .red .bigbox {
+      border: solid #df0101 3px;
+    }
+    .ubox {
       width:70px;
       height:70px;
     }
-    .blue .bigbox .col .box {
+    .blue .bigbox .col .ubox {
       border: solid #6495ed 3px;
+    }
+    .blue .bigbox .col .ubox:hover {
+      background: #6495ed;
+      color: #5480da;
+    }
+    .red .bigbox .col .ubox {
+      border: solid #df0101 3px;
     }
   </style>
 </head>
@@ -52,7 +62,7 @@
         grid[i].appendChild(grid[i][x]);
         for (var y = 0; y < 3; y++) {
           t = document.createElement('div');
-          t.className='box';
+          t.className='box ubox';
           t.x=x;
           t.y=y;
           t.b=i;
@@ -60,19 +70,8 @@
           t.innerHTML='&#x2718;';
           t.style.color='#fff';
           t.onmousedown=function() {
-            clicked(this.b,this.x,this.y);
-          };
-          t.onmouseover=function() {
-            if(!this.c) {
-              this.style.background='#6495ed';
-              this.style.color='#5480da';
-            }
-          };
-          t.onmouseout=function() {
-            this.style.background='#fff';
-            if (this.c) {
-              this.style.color='#000';
-            } else this.style.color='#fff';
+            this.c=true;
+            this.className='box sbox';
           };
           grid[i][x].appendChild(t);
           grid[i][x][y]=t;
