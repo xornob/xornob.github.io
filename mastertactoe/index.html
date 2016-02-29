@@ -69,6 +69,12 @@
       background-color: #000;
       color: #fff;
     }
+    #bluetext {
+      color: #6495ed;
+    }
+    #redtext {
+      color: #ef2222;
+    }
   </style>
 </head>
 <body>
@@ -80,7 +86,9 @@
     <div class="bigbox" id="bb3">
     </div>
     <div>
+      <span id="bluetext">Blue: <span id="bluecount">0</span></span>
       <button id="rand">New Game</button>
+      <span id="redtext">Red: <span id="redcount">0</span></span>
     </div>
     <div>
       <button id="blue">New Game (blue first)</button>
@@ -137,7 +145,11 @@
                       for (var y = 0; y < 3; y++) {
                         grid[z][x][y].className='box rbox';
                       }
-
+                      if (a.className=='red') {
+                        bluecount.innerHTML++;
+                      }
+                      else
+                        redcount.innerHTML++;
                       a.className='done';
                       window.done=true;
                     }
@@ -151,7 +163,11 @@
                       for (var x = 0; x < 3; x++) {
                         grid[z][x][y].className='box rbox';
                       }
-
+                      if (a.className=='red') {
+                        bluecount.innerHTML++;
+                      }
+                      else
+                        redcount.innerHTML++;
                       a.className='done';
                       window.done=true;
                     }
@@ -164,6 +180,11 @@
                     for (var x = 0; x < 3; x++) {
                       grid[z][x][x].className='box rbox';
                     }
+                    if (a.className=='red') {
+                      bluecount.innerHTML++;
+                    }
+                    else
+                        redcount.innerHTML++;
                     a.className='done';
                     window.done=true;
                   }
@@ -175,6 +196,11 @@
                     for (var x = 0; x < 3; x++) {
                       grid[z][x][2-x].className='box rbox';
                     }
+                    if (a.className=='red') {
+                      bluecount.innerHTML++;
+                    }
+                    else
+                        redcount.innerHTML++;
                     a.className='done';
                     window.done=true;
                   }
