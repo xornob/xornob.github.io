@@ -4,13 +4,18 @@
   <title>Master Tac Toe</title>
   <style type="text/css">
     body {
-      font-size:50px;
      -webkit-touch-callout:none;
      -webkit-user-select: none;
      -khtml-user-select: none;
      -moz-user-select:  none;
      -ms-user-select:  none;
       user-select:    none;
+    }
+    button {
+      margin-top:30px;
+    }
+    span {
+      font-size:50px;
     }
     .col {
       display: inline-block;
@@ -26,6 +31,7 @@
       border: solid #df0101 3px;
     }
     .box {
+      font-size:50px;
       width:70px;
       height:70px;
     }
@@ -85,21 +91,51 @@
     </div>
     <div class="bigbox" id="bb3">
     </div>
-    <div>
-      <span id="bluetext">Blue: <span id="bluecount">0</span></span>
-      <button id="rand">New Game</button>
-      <span id="redtext">Red: <span id="redcount">0</span></span>
-    </div>
-    <div>
-      <button id="blue">New Game (blue first)</button>
-      <button id="red">New Game (red first)</button>
-    </div>
+      <div>
+        <span id="bluetext">Blue: <span id="bluecount">0</span></span>
+        <button id="rand">New Game</button>
+        <span id="redtext">Red: <span id="redcount">0</span></span>
+      </div>
+      <div>
+        <button id="blue">New Game (blue first)</button>
+        <button id="red">New Game (red first)</button>
+      </div>
+      <div>
+        <button id="how">Show How to Play</button>
+      </div>
+      <div id="play">
+        This is a more complicated form of Tic Tac Toe. It is played on 3 grids. Both players play as X, and if you make a row of 3, you lose.
+      </div>
+      <div>
+        <button id="reset">Completely Reset</button>
+      </div>
   </div>
   <script type="text/javascript">
     a=document.getElementById('all');
     b1=document.getElementById('bb1');
     b2=document.getElementById('bb2');
     b3=document.getElementById('bb3');
+    how=document.getElementById('how');
+    play=document.getElementById('play');
+    play.style.display='none';
+    bluecount=document.getElementById('bluecount');
+    redcount=document.getElementById('redcount');
+    function howdown () {
+      this.innerHTML='Hide How to Play';
+      play.style.display='block';
+      this.onmousedown=function() {
+        this.innerHTML='Show How to Play';
+        play.style.display='none';
+        this.onmousedown=howdown;
+      };
+    }
+    how.onmousedown=howdown;
+    document.getElementById('reset').onmousedown = function() {
+      if (how.onmousedown!=howdown) how.onmousedown();
+      bluecount.innerHTML='0';
+      redcount.innerHTML='0';
+      reset((Math.random()>.5)?'blue':'red');
+    };
     function reset (n) {
       for (var z = 0; z < 3; z++) {
         for (var x = 0; x < 3; x++) {
@@ -152,6 +188,7 @@
                         redcount.innerHTML++;
                       a.className='done';
                       window.done=true;
+                      return;
                     }
                   }
                   for (var y = 0; y < 3; y++) {
@@ -170,6 +207,7 @@
                         redcount.innerHTML++;
                       a.className='done';
                       window.done=true;
+                      return;
                     }
                   }
                   t=true;
@@ -187,6 +225,7 @@
                         redcount.innerHTML++;
                     a.className='done';
                     window.done=true;
+                    return;
                   }
                   t=true;
                   for (var x = 0; x < 3; x++) {
@@ -203,6 +242,7 @@
                         redcount.innerHTML++;
                     a.className='done';
                     window.done=true;
+                    return;
                   }
                 }
                 
