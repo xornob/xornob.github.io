@@ -19,27 +19,33 @@
   n=document.getElementById('name');
   b=document.getElementById('button');
   b.onmousedown=function() {
-    if (num<4) {
-      n.innerHTML=first[(Math.random()*999) | 0]+' '+first[(Math.random()*999) | 0]+' '+last[(Math.random()*999) | 0];
+    if (num[2]) {
+      n.innerHTML=list[num[1]][1];
     }
     else {
-      n.innerHTML='Jesse Landis Oswald';
+      n.innerHTML=first[(Math.random()*999) | 0]+' '+first[(Math.random()*999) | 0]+' '+last[(Math.random()*999) | 0];
     }
     b.innerHTML='Click again for a new one!';
-    num=0;
+    num=[-1,0,false];
   };
 
-  list=[71,65,89,69];
-  num=0;
+  list=[[[190,188],'Jesse Landis Oswald'],[[75,16],'Kristoff Alexander Malinin']];
+  num=[-1,0,false];
 
   document.onkeydown = function(e) {
     var key = window.event || e;
-    if (key.keyCode==list[num]) {
-      num+=1;
-    } else {
-      num=0;
-    };
-  };
+    if (num[0]==-1) {
+      for (x=0;x<list.length;x++) {
+        if (key.keyCode==list[x][0][0]) {
+          num=[1,x,false];
+        }
+      }
+    }
+    else if (key.keyCode==list[num[1]][0][num[0]]) {
+      num[0]++;
+      num[2]=(num[0]==list[num[1]][0].length)
+    }
+  }
 
 </script>
 </html>
