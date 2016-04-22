@@ -148,10 +148,24 @@ function puck (x, y, paddle, n, color) {
           this.x = 968 - this.x;
           ctx.circle(this.x, this.y, 50, this.c);
         }
-        if (this.y<16) {
+        if (this.y<16 && outside(230,this.x,290)) {
           this.v = this.v.flipy();
           this.y = 32 - this.y;
           ctx.circle(this.x, this.y, 50, this.c);
+        }
+        else if (this.y<16) {
+          if (items.length==this.n+1) {
+            alert('You beat level '+['1!','2!','3!','4!','5!'][this.n-2]);
+            if (this.n==6) {
+              alert('You won!');
+              return;
+            };
+            start(this.n+1);
+          }
+          else {
+            alert('You lost because the '+['red','orange','yellow','green','blue','purple'][this.n-1]+' puck went out, not the '+['red','orange','yellow','green','blue','purple'][items.length-2]+' one.');
+            start(2);
+          }
         }
         else if (this.y>484) {
           this.v = this.v.flipy();
@@ -182,11 +196,15 @@ function frame () {
 function start (n) {
   col = ['puck', '#FF0000', '#FF7B00', '#FAFF00', '#2EFF00', '#00FFF6', '#6E00FF', '#FF00F2'];
   num = trimto(1, n, 6)+1;
+  window.gstate=-1;
+  items=[];
   for (var i = 0; i < num; i++) {
     items.push(new puck(i*(300/num) + 100, 300 + ((i*2)%5)*25, !i, i, col[i]));
   };
   c.onmousedown = function() { items[0].pause(); };
-  window.frametime = window.setInterval(frame, 30);
+  ctx.fillStyle = '#000000';
+  ctx.fillRect(0, 0, 510, 510);
+  window.frametime = window.setInterval(frame, 5);
 }
 
 window.onresize = function() {
@@ -202,9 +220,6 @@ window.onresize = function() {
 };
 
 window.onload = function () {
-  document.getElementById('button').onmousedown = function() {
-    start(document.getElementById('num').value);
-  };
   c = document.getElementById('canvas');
   ctx = c.getContext('2d');
   if (window.innerWidth > 600 || window.innerHeight > 600) {
@@ -216,12 +231,13 @@ window.onload = function () {
     return false;
   }
   ctx.clear = function() {
-    this.globalAlpha = .1;
-    this.fillStyle = '#FFFFFF';
+    this.globalAlpha = .01;
+    this.fillStyle = '#000000';
     this.fillRect(0, 0, 510, 510);
     this.globalAlpha = 1;
     this.fillStyle='#C2F0F0';
     this.fillRect(5, 5, 500, 500);
+    this.fillRect(220, 0, 80, 5);
   };
   ctx.circle = function(x, y, r, c, b, bc) {
     this.beginPath();
@@ -240,4 +256,5 @@ window.onload = function () {
     ctx.my = e.clientY - c.offsetTop - 5;
   };
   window.onresize();
+  start(2);
 };
