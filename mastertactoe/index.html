@@ -4,20 +4,25 @@
   <title>Master Tac Toe</title>
   <style type="text/css">
     body {
-      font-size:50px;
      -webkit-touch-callout:none;
      -webkit-user-select: none;
      -khtml-user-select: none;
      -moz-user-select:  none;
      -ms-user-select:  none;
       user-select:    none;
-
+    }
+    button {
+      margin-top:30px;
+    }
+    span {
+      font-size:50px;
     }
     .col {
       display: inline-block;
     }
     .bigbox {
       display: inline-block;
+      border: solid #000 3px;
     }
     .blue .bigbox {
       border: solid #6495ed 3px;
@@ -25,36 +30,129 @@
     .red .bigbox {
       border: solid #df0101 3px;
     }
-    .ubox {
+    .box {
+      font-size:50px;
       width:70px;
       height:70px;
     }
     .blue .bigbox .col .ubox {
       border: solid #6495ed 3px;
+      background-color: #fff;
+      color: #fff;
+    }
+    .blue .bigbox .col .sbox {
+      border: solid #6495ed 3px;
+      color: #000;
     }
     .blue .bigbox .col .ubox:hover {
-      background: #6495ed;
+      background-color: #6495ed;
       color: #5480da;
     }
     .red .bigbox .col .ubox {
       border: solid #df0101 3px;
+      background-color: #fff;
+      color: #fff;
+    }
+    .red .bigbox .col .sbox {
+      border: solid #df0101 3px;
+      color: #000;
+    }
+    .red .bigbox .col .ubox:hover {
+      background-color: #df0101;
+      color: #ef2222;
+    }
+    .rbox {
+      border: solid #000 3px;
+      color: #000;
+    }
+    .done .bigbox .col .ubox {
+      border: solid #000 3px;
+      background-color: #000;
+      color: #000;
+    }
+    .done .bigbox .col .sbox {
+      border: solid #000 3px;
+      background-color: #000;
+      color: #fff;
+    }
+    #bluetext {
+      color: #6495ed;
+    }
+    #redtext {
+      color: #ef2222;
     }
   </style>
 </head>
 <body>
-  <div align="center" class="blue">
+  <div align="center" id="all" class="blue">
     <div class="bigbox" id="bb1">
     </div>
     <div class="bigbox" id="bb2">
     </div>
     <div class="bigbox" id="bb3">
     </div>
+      <div>
+        <span id="bluetext">Blue: <span id="bluecount">0</span></span>
+        <button id="rand">New Game</button>
+        <span id="redtext">Red: <span id="redcount">0</span></span>
+      </div>
+      <div>
+        <button id="blue">New Game (blue first)</button>
+        <button id="red">New Game (red first)</button>
+      </div>
+      <div>
+        <button id="how">Show How to Play</button>
+      </div>
+      <div id="play">
+        This is a more complicated form of Tic Tac Toe. It is played on 3 grids. Both players play as X, and if you make a row of 3, you lose.
+      </div>
+      <div>
+        <button id="reset">Completely Reset</button>
+      </div>
   </div>
   <script type="text/javascript">
+    a=document.getElementById('all');
     b1=document.getElementById('bb1');
     b2=document.getElementById('bb2');
     b3=document.getElementById('bb3');
+    how=document.getElementById('how');
+    play=document.getElementById('play');
+    play.style.display='none';
+    bluecount=document.getElementById('bluecount');
+    redcount=document.getElementById('redcount');
+    function howdown () {
+      this.innerHTML='Hide How to Play';
+      play.style.display='block';
+      this.onmousedown=function() {
+        this.innerHTML='Show How to Play';
+        play.style.display='none';
+        this.onmousedown=howdown;
+      };
+    }
+    how.onmousedown=howdown;
+    document.getElementById('reset').onmousedown = function() {
+      if (how.onmousedown!=howdown) how.onmousedown();
+      bluecount.innerHTML='0';
+      redcount.innerHTML='0';
+      reset((Math.random()>.5)?'blue':'red');
+    };
+    function reset (n) {
+      for (var z = 0; z < 3; z++) {
+        for (var x = 0; x < 3; x++) {
+          for (var y = 0; y < 3; y++) {
+            grid[z][x][y].c=false;
+            grid[z][x][y].className='box ubox';
+          }
+        }
+      }
+      window.done=false;
+      a.className=n;
+    }
+    document.getElementById('rand').onmousedown=function() {reset((Math.random()>.5)?'blue':'red')};
+    document.getElementById('blue').onmousedown=function() {reset('blue')};
+    document.getElementById('red').onmousedown=function() {reset('red')};
     grid=[b1,b2,b3];
+    window.done=false;
     for (var i = 0; i < 3; i++) {
       for (var x = 0; x < 3; x++) {
         grid[i][x]=document.createElement('div');
@@ -68,10 +166,90 @@
           t.b=i;
           t.c=false;
           t.innerHTML='&#x2718;';
-          t.style.color='#fff';
           t.onmousedown=function() {
-            this.c=true;
-            this.className='box sbox';
+            if (!window.done) {
+              this.className='box sbox';
+              if (!this.c) {
+                this.c=true;
+                for (var z = 0; z < 3; z++) {
+                  for (var x = 0; x < 3; x++) {
+                    t=true;
+                    for (var y = 0; y < 3; y++) {
+                      if (!grid[z][x][y].c) t=false;
+                    }
+                    if (t) {
+                      for (var y = 0; y < 3; y++) {
+                        grid[z][x][y].className='box rbox';
+                      }
+                      if (a.className=='red') {
+                        bluecount.innerHTML++;
+                      }
+                      else
+                        redcount.innerHTML++;
+                      a.className='done';
+                      window.done=true;
+                      return;
+                    }
+                  }
+                  for (var y = 0; y < 3; y++) {
+                    t=true;
+                    for (var x = 0; x < 3; x++) {
+                      if (!grid[z][x][y].c) t=false;
+                    }
+                    if (t) {
+                      for (var x = 0; x < 3; x++) {
+                        grid[z][x][y].className='box rbox';
+                      }
+                      if (a.className=='red') {
+                        bluecount.innerHTML++;
+                      }
+                      else
+                        redcount.innerHTML++;
+                      a.className='done';
+                      window.done=true;
+                      return;
+                    }
+                  }
+                  t=true;
+                  for (var x = 0; x < 3; x++) {
+                    if (!grid[z][x][x].c) t=false;
+                  }
+                  if (t) {
+                    for (var x = 0; x < 3; x++) {
+                      grid[z][x][x].className='box rbox';
+                    }
+                    if (a.className=='red') {
+                      bluecount.innerHTML++;
+                    }
+                    else
+                        redcount.innerHTML++;
+                    a.className='done';
+                    window.done=true;
+                    return;
+                  }
+                  t=true;
+                  for (var x = 0; x < 3; x++) {
+                    if (!grid[z][x][2-x].c) t=false;
+                  }
+                  if (t) {
+                    for (var x = 0; x < 3; x++) {
+                      grid[z][x][2-x].className='box rbox';
+                    }
+                    if (a.className=='red') {
+                      bluecount.innerHTML++;
+                    }
+                    else
+                        redcount.innerHTML++;
+                    a.className='done';
+                    window.done=true;
+                    return;
+                  }
+                }
+                
+                if (a.className=='blue') a.className='red';
+                else if (a.className=='red') a.className='blue';
+              }
+            }
           };
           grid[i][x].appendChild(t);
           grid[i][x][y]=t;
