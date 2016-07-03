@@ -121,7 +121,7 @@
         this.ctx.fillStyle='#fff';
         this.ctx.fillRect(0,0,50,50);
         this.ctx.fillStyle='#000';
-        if (i<0) {
+        if (i>0) {
           this.rotate(i-1);
         } else if (typeof i === 'undefined') {
           this.draw();
@@ -194,11 +194,15 @@
     }
     #container {
       width: 500px;
+      margin-top: 15px;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
-<body>
+<body align="center">
 	<div id="container"></div>
-  Based on (pretty much a copy of) the game <a href="http://loopgame.co/" target="_blank">&infin; loop</a> by Jonas Lekevicius.
+  <p>Based on (pretty much a copy of) the game <a href="http://loopgame.co/" target="_blank">&infin; loop</a> by Jonas Lekevicius.</p>
+  <p>Click on a tile to rotate it. Try to connect all the pieces with no loose ends.</p>
 </body>
 </html>
