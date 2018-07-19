@@ -8,11 +8,11 @@
 			text-align: center;
 			font-family: "Courier New", Courier, monospace;
 			-webkit-touch-callout: none;
-	    -webkit-user-select: none;
-	    -khtml-user-select: none;
-	    -moz-user-select: none;
-	    -ms-user-select: none;
-	    user-select: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
 		}
 		#container {
 			cursor: pointer;
@@ -30,13 +30,20 @@
 	<a href="../">Other Projects</a>
 	<h2>Crazy Word Search!</h2>
 	<div id="container"></div>
-	<span id="toDelete">
-		<input id="wordgetter" type="text" value="fish" onkeydown="if (event.keyCode == 13) start();" />
+	<span id="settings">
+		<input id="wordin" type="text" value="fish" onkeydown="if (event.keyCode == 13) start();" />
 		<button id="start" disabled>Start</button><br>
-		The width of the grid: <input id="x" type="text" value="20" size="1" maxlength="2"><br>
-		The height of the grid: <input id="y" type="text" value="20" size="1" maxlength="2">
+		The width of the grid: <input id="x" type="text" value="20" size="1"><br>
+		The height of the grid: <input id="y" type="text" value="20" size="1">
+		<p id="settingInfo">Enter the settings to use for the word search</p>
 	</span>
-	<p id="counts">Enter a word to use for the word search</p>
 	<p id="nojs">Javasript doesn't seem to be working.</p>
+	<span id="searchInfo" style="display: none;">
+		<p id="counts">There are <span id="remaining">#</span>/<span id="total">#</span> occurrences of <span id="wordDisplay">WORD</span> remaining</p>
+		<p id="givenup" style="display: none;"></p>
+		<p id="complete" style="display: none;"></p>
+		<button id="giveup">Give Up</button>
+		<button id="restart">New Search</button>
+	</span>
 </body>
 </html>
