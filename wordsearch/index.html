@@ -29,6 +29,7 @@
 	<h2>Crazy Word Search!</h2>
 	<div id="container"></div>
 	<span id="settings">
+		<p>This applet populates a wordsearch<br>with exclusively letters from the chosen word,<br>making it more difficult to solve</p>
 		<input id="wordin" type="text" value="fish" onkeydown="if (event.keyCode == 13) start();" />
 		<button id="start" disabled>Start</button><br>
 		The width of the grid: <input id="x" type="text" value="20" size="1"><br>
@@ -37,7 +38,7 @@
 	</span>
 	<p id="nojs">Javasript doesn't seem to be working.</p>
 	<span id="searchInfo" style="display: none;">
-		<p id="counts">There are <span id="remaining">#</span>/<span id="total">#</span> occurrences of <span id="wordDisplay">WORD</span> remaining</p>
+		<p id="counts">There are <span id="remaining">8</span>/<span id="total">8</span> occurrences of <span id="wordDisplay">"fish"</span> remaining<br>Click and drag to find occurences</p>
 		<p id="givenup" style="display: none;"></p>
 		<p id="complete" style="display: none;"></p>
 		<button id="giveup">Give Up</button>
